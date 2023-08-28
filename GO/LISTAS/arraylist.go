@@ -41,15 +41,17 @@ func (list *ArrayList) show(pos int) int {
 }
 
 func (list *ArrayList) insert(value int, pos int) {
-	sizeArray := len(list.values)
-	if list.inserted == sizeArray {
-		list.doubleArray(sizeArray)
+	if pos >= 0 && pos <= list.inserted {
+		sizeArray := len(list.values)
+		if list.inserted == sizeArray {
+			list.doubleArray(sizeArray)
+		}
+		for i := list.inserted + 1; i > pos; i-- {
+			list.values[i] = list.values[i-1]
+		}
+		list.values[pos] = value
+		list.inserted++
 	}
-	for i := list.inserted + 1; i > pos; i-- {
-		list.values[i] = list.values[i-1]
-	}
-	list.values[pos] = value
-	list.inserted++
 }
 
 func (list *ArrayList) pop() {
@@ -63,7 +65,11 @@ func (list *ArrayList) pop() {
 }
 
 func (list *ArrayList) update(value int, pos int) {
-	list.values[pos] = value
+	if pos >= 0 && pos <= list.inserted {
+		list.values[pos] = value
+	} else {
+		fmt.Println("POSIÇÃO INVÁLIDA!")
+	}
 }
 
 func (list *ArrayList) remove(pos int) {
@@ -88,7 +94,7 @@ func main() {
 	list.append(3)
 	list.append(4)
 
-	list.remove(0)
+	list.insert(50, 4)
 
 	fmt.Println("TAMANHO DA LISTA:", list.size())
 	for i := 0; i < list.inserted; i++ {
