@@ -114,11 +114,29 @@ func (list *LinkedList) remove(pos int) {
 	}
 
 	aux.next = aux.next.next
-	//aux.next.next = nil
 }
 
 func (list *LinkedList) update(val int, pos int) {
+	if pos < 0 || pos > list.size() {
+		fmt.Println("POSIÇÃO INVÁLIDA!")
+	}
+	aux := list.head
+	if pos == 0 {
+		aux.value = val
+		return
+	}
+	for i := 0; i < pos-1; i++ {
+		aux = aux.next
+	}
+	aux.next.value = val
+}
 
+func (list *LinkedList) inverter() {
+	aux := list.head
+	sup := list.head.next
+	for i := 0; i < list.size()-1; i++ {
+		aux = sup.next
+	}
 }
 
 func (list *LinkedList) show() {
@@ -130,23 +148,13 @@ func (list *LinkedList) show() {
 
 func main() {
 	lista := NewLinkedList()
-	lista.append(189)
-	lista.append(29)
-	lista.append(19)
-	lista.append(109)
-	lista.append(31)
-	lista.append(190)
-	lista.append(231)
-	lista.append(121)
-	lista.append(172)
+	lista.append(189)  //0
+	lista.append(29)   //1
+	lista.append(19)   //2
+	lista.append(109)  //3
+	lista.append(24)   //4
+	lista.append(1009) //5
+	lista.append(37)   //6
 
-	fmt.Println(lista.size())
-
-	lista.remove(4)
-
-	lista.show()
-
-	fmt.Println("")
-
-	fmt.Println(lista.size())
+	lista.inverter()
 }
