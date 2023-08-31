@@ -77,21 +77,17 @@ func (list *LinkedList) pop() {
 }
 
 func (list *LinkedList) get(pos int) int {
-	if pos < 0 || pos > list.size() {
+	posSize := list.size() - 1
+	if pos < 0 || pos > posSize {
 		fmt.Println("POSIÇÃO INVÁLIDA!")
 		var none int
 		return none
 	}
 
 	aux := list.head
+
 	for i := 0; i < pos; i++ {
 		aux = aux.next
-	}
-
-	if aux == nil {
-		fmt.Println("POSIÇÃO INVÁLIDA!")
-		var none int
-		return none
 	}
 	return aux.value
 }
@@ -132,11 +128,16 @@ func (list *LinkedList) update(val int, pos int) {
 }
 
 func (list *LinkedList) inverter() {
-	aux := list.head
-	sup := list.head.next
-	for i := 0; i < list.size()-1; i++ {
-		aux = sup.next
+	atual := list.head
+	var proximo *Node
+	var anterior *Node
+	for atual != nil {
+		proximo = atual.next
+		atual.next = anterior
+		anterior = atual
+		atual = proximo
 	}
+	list.head = anterior
 }
 
 func (list *LinkedList) show() {
@@ -154,7 +155,10 @@ func main() {
 	lista.append(109)  //3
 	lista.append(24)   //4
 	lista.append(1009) //5
-	lista.append(37)   //6
+	lista.append(72)   //6
+	lista.append(50)   //6
+	lista.append(238)  //6
 
 	lista.inverter()
+	lista.show()
 }
