@@ -8,6 +8,7 @@ type List[T any] interface {
 	pop()                  //
 	update(val T, pos int) //
 	remove(pos int)        //
+	insert(val T, pos int) //
 }
 
 type Node[T any] struct {
@@ -100,6 +101,30 @@ func (list *DoubleLinkedList[T]) remove(pos int) {
 	list.size--
 }
 
+func (list *DoubleLinkedList[T]) insert(val T, pos int) {
+	newNode := Node[T]{value: val, prev: nil, next: nil}
+	if pos < 0 || pos > list.size {
+		fmt.Println("INVALID POSITION")
+		return
+	}
+	if pos == 0 {
+		sup := list.head
+		list.head = &newNode
+		newNode.next = sup
+		list.size++
+		return
+	}
+
+	aux := list.head
+
+	for i := 0; i < pos-1; i++ {
+		aux = aux.next
+	}
+	newNode.next = aux.next
+	aux.next = &newNode
+	list.size++
+}
+
 func main() {
 	list := DoubleLinkedList[int]{head: nil, tail: nil, size: 0}
 
@@ -109,6 +134,6 @@ func main() {
 	list.append(20)
 	list.append(25)
 
-	list.remove(5)
+	list.insert(50, 3)
 	list.show()
 }
