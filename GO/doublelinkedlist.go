@@ -3,9 +3,10 @@ package main
 import "fmt"
 
 type List[T any] interface {
-	append(val T)
-	show()
-	pop()
+	append(val T) //
+	show()        //
+	pop()         //
+	update(val T, pos int)
 }
 
 type Node[T any] struct {
@@ -59,6 +60,24 @@ func (list *DoubleLinkedList[T]) pop() {
 	list.size--
 }
 
+func (list *DoubleLinkedList[T]) update(val T, pos int) {
+	if pos < 0 || pos > list.size-1 {
+		fmt.Println("INVALID POSITION")
+		return
+	}
+
+	if pos == 0 {
+		list.head.value = val
+		return
+	}
+
+	aux := list.head
+	for i := 0; i < pos-1; i++ {
+		aux = aux.next
+	}
+	aux.next.value = val
+}
+
 func main() {
 	list := DoubleLinkedList[int]{head: nil, tail: nil, size: 0}
 
@@ -68,6 +87,6 @@ func main() {
 	list.append(20)
 	list.append(25)
 
-	list.pop()
+	list.update(50, 5)
 	list.show()
 }
