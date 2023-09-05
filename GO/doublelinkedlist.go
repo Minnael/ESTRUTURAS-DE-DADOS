@@ -40,7 +40,23 @@ func (list *DoubleLinkedList[T]) show() {
 }
 
 func (list *DoubleLinkedList[T]) pop() {
+	if list.size == 0 {
+		fmt.Println("EMPTY LIST")
+		return
+	}
+	if list.size == 1 {
+		list.head = nil
+		list.tail = nil
+		return
+	}
 
+	aux := list.head
+
+	for aux.next.next != nil {
+		aux = aux.next
+	}
+	aux.next = nil
+	list.size--
 }
 
 func main() {
@@ -51,8 +67,7 @@ func main() {
 	list.append(15)
 	list.append(20)
 	list.append(25)
-	list.append(30)
-	list.append(35)
 
+	list.pop()
 	list.show()
 }
