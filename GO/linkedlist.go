@@ -2,31 +2,29 @@ package main
 
 import "fmt"
 
-type Node struct {
-	value int
-	next  *Node
+type List[T any] interface {
+	append(val T)          //TERMINADO
+	size() int             //TERMINADO
+	get(pos int) T         //TERMINADO
+	show()                 //TERMINADO
+	pop()                  //TERMINADO
+	update(val T, pos int) //TERMINADO
+	insert(val T, pos int) //TERMINADO
+	remove(pos int)        //TERMINADO
+	inverter()             //TERMINADO
 }
 
-type LinkedList struct {
-	head *Node
+type Node[T any] struct {
+	value T
+	next  *Node[T]
 }
 
-func NewLinkedList() *LinkedList {
-	return &LinkedList{head: nil}
+type LinkedList[T any] struct {
+	head *Node[T]
 }
 
-func (list *LinkedList) size() int {
-	aux := list.head
-	size := 0
-	for aux != nil {
-		size++
-		aux = aux.next
-	}
-	return size
-}
-
-func (list *LinkedList) append(val int) {
-	newNode := Node{value: val, next: nil}
+func (list *LinkedList[T]) append(val T) {
+	newNode := Node[T]{value: val, next: nil}
 	if list.head == nil {
 		list.head = &newNode
 		return
@@ -40,35 +38,58 @@ func (list *LinkedList) append(val int) {
 	aux.next = &newNode
 }
 
-func (list *LinkedList) insert(val int, pos int) {
-	size := list.size()
-	newNode := Node{value: val, next: nil}
+func (list *LinkedList[T]) size() int {
+	var size int
+	aux := list.head
+	for aux != nil {
+		aux = aux.next
+		size++
+	}
+	return size
+}
 
+func (list *LinkedList[T]) get(pos int) T {
+	size := list.size() - 1
 	if pos < 0 || pos > size {
-		fmt.Println("POSIÇÃO INVÁLIDA!")
+		fmt.Println("INVALID POSITION")
+		var sup T
+		return sup
+	}
+	if list.head == nil {
+		fmt.Println("EMPTY LIST")
+		var sup T
+		return sup
+	}
+	if pos == 0 {
+		return list.head.value
 	}
 
 	aux := list.head
-	for i := 0; i < pos-1; i++ {
+	for aux.next != nil {
 		aux = aux.next
 	}
-
-	newNode.next = aux.next
-	aux.next = &newNode
-	fmt.Println(aux.next.value)
+	return aux.value
 }
 
-func (list *LinkedList) pop() {
+func (list *LinkedList[T]) show() {
+	size := list.size()
+	aux := list.head
+	for i := 0; i < size; i++ {
+		fmt.Print("|", aux.value, "|  ->  ")
+		aux = aux.next
+	}
+	print("nil")
+}
+
+func (list *LinkedList[T]) pop() {
 	if list.head == nil {
-		fmt.Println("LISTA VAZIA!")
+		fmt.Println("EMPTY LIST")
 		return
 	}
-
 	if list.head.next == nil {
 		list.head = nil
 		return
 	}
-
 	aux := list.head
 	for aux.next.next != nil {
 		aux = aux.next
@@ -76,12 +97,10 @@ func (list *LinkedList) pop() {
 	aux.next = nil
 }
 
-func (list *LinkedList) get(pos int) int {
-	posSize := list.size() - 1
-	if pos < 0 || pos > posSize {
-		fmt.Println("POSIÇÃO INVÁLIDA!")
-		var none int
-		return none
+func (list *LinkedList[T]) update(val T, pos int) {
+	if pos < 0 || pos > list.size()-1 {
+		fmt.Println("INVALID POSITION")
+		return
 	}
 
 	aux := list.head
@@ -89,15 +108,38 @@ func (list *LinkedList) get(pos int) int {
 	for i := 0; i < pos; i++ {
 		aux = aux.next
 	}
-	return aux.value
+	aux.value = val
 }
 
-func (list *LinkedList) remove(pos int) {
-	if pos < 0 || pos > list.size() {
-		fmt.Println("POSIÇÃO INVÁLIDA!")
+func (list *LinkedList[T]) insert(val T, pos int) {
+	if pos < 0 || pos > list.size()-1 {
+		fmt.Println("INVALID POSITION")
 		return
 	}
 
+	newNode := Node[T]{value: val, next: nil}
+	if pos == 0 {
+		sup := list.head
+		list.head = &newNode
+		newNode.next = sup
+		return
+	}
+
+	aux := list.head
+
+	for i := 0; i < pos-1; i++ {
+		aux = aux.next
+	}
+	sup := aux.next
+	aux.next = &newNode
+	newNode.next = sup
+}
+
+func (list *LinkedList[T]) remove(pos int) {
+	if pos < 0 || pos > list.size()-1 {
+		fmt.Println("INVALID POSITION")
+		return
+	}
 	if pos == 0 {
 		list.head = list.head.next
 		return
@@ -108,57 +150,31 @@ func (list *LinkedList) remove(pos int) {
 	for i := 0; i < pos-1; i++ {
 		aux = aux.next
 	}
-
 	aux.next = aux.next.next
 }
 
-func (list *LinkedList) update(val int, pos int) {
-	if pos < 0 || pos > list.size() {
-		fmt.Println("POSIÇÃO INVÁLIDA!")
+func (list *LinkedList[T]) inverter() {
+	current := list.head
+	var prev *Node[T]
+	var next *Node[T]
+	for current != nil {
+		next = current.next
+		current.next = prev
+		prev = current
+		current = next
 	}
-	aux := list.head
-	if pos == 0 {
-		aux.value = val
-		return
-	}
-	for i := 0; i < pos-1; i++ {
-		aux = aux.next
-	}
-	aux.next.value = val
-}
-
-func (list *LinkedList) inverter() {
-	atual := list.head
-	var proximo *Node
-	var anterior *Node
-	for atual != nil {
-		proximo = atual.next
-		atual.next = anterior
-		anterior = atual
-		atual = proximo
-	}
-	list.head = anterior
-}
-
-func (list *LinkedList) show() {
-	size := list.size()
-	for i := 0; i < size; i++ {
-		fmt.Print("  ", list.get(i))
-	}
+	list.head = prev
 }
 
 func main() {
-	lista := NewLinkedList()
-	lista.append(189)  //0
-	lista.append(29)   //1
-	lista.append(19)   //2
-	lista.append(109)  //3
-	lista.append(24)   //4
-	lista.append(1009) //5
-	lista.append(72)   //6
-	lista.append(50)   //6
-	lista.append(238)  //6
+	list := LinkedList[int]{head: nil}
 
-	lista.inverter()
-	lista.show()
+	list.append(5)
+	list.append(10)
+	list.append(15)
+	list.append(20)
+	list.append(25)
+
+	list.inverter() //INVERTE LISTA
+	list.show()     //EXIBIR LISTA
 }
