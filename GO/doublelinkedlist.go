@@ -9,6 +9,7 @@ type List[T any] interface {
 	update(val T, pos int) //TERMINADO
 	remove(pos int)        //TERMINADO
 	insert(val T, pos int) //TERMINADO
+	get(pos int) T         //TERMINADO
 }
 
 type Node[T any] struct {
@@ -123,6 +124,25 @@ func (list *DoubleLinkedList[T]) insert(val T, pos int) {
 	newNode.next = aux.next
 	aux.next = &newNode
 	list.size++
+}
+
+func (list *DoubleLinkedList[T]) get(pos int) T {
+	if pos < 0 || pos > list.size-1 {
+		fmt.Println("INVALID POSITION")
+		var sup T
+		return sup
+	}
+
+	if pos == 0 {
+		return list.head.value
+	}
+
+	aux := list.head
+
+	for i := 0; i < pos-1; i++ {
+		aux = aux.next
+	}
+	return aux.next.value
 }
 
 func main() {
