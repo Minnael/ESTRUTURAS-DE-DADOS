@@ -3,12 +3,12 @@ package main
 import "fmt"
 
 type List[T any] interface {
-	append(val T)          //
-	show()                 //
-	pop()                  //
-	update(val T, pos int) //
-	remove(pos int)        //
-	insert(val T, pos int) //
+	append(val T)          //TERMINADO
+	show()                 //TERMINADO
+	pop()                  //TERMINADO
+	update(val T, pos int) //TERMINADO
+	remove(pos int)        //TERMINADO
+	insert(val T, pos int) //TERMINADO
 }
 
 type Node[T any] struct {
