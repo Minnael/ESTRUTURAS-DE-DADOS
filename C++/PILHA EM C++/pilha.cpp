@@ -39,6 +39,7 @@ int main(){
         cartas.pop();
     }
 
+    std::cout << cartas.empty() << std::endl;
 
     return 0;
 }
