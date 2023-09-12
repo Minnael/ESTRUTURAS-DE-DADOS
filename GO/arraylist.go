@@ -85,6 +85,12 @@ func (list *ArrayList) remove(pos int) {
 	}
 }
 
+func (list *ArrayList) reverse() {
+	for i, j := 0, list.inserted-1; i < j; i, j = i+1, j-1 {
+		list.values[i], list.values[j] = list.values[j], list.values[i]
+	}
+}
+
 func main() {
 	list := Init(5)
 
@@ -96,7 +102,9 @@ func main() {
 	list.append(5)
 	list.append(6)
 
-	list.insert(50, 4)
+	//list.insert(50, 4)
+
+	list.reverse()
 
 	fmt.Println("TAMANHO DA LISTA:", list.size())
 	for i := 0; i < list.inserted; i++ {

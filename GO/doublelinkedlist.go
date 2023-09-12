@@ -10,6 +10,7 @@ type List[T any] interface {
 	remove(pos int)        //TERMINADO
 	insert(val T, pos int) //TERMINADO
 	get(pos int) T         //TERMINADO
+	reverse()
 }
 
 type Node[T any] struct {
@@ -145,6 +146,19 @@ func (list *DoubleLinkedList[T]) get(pos int) T {
 	return aux.next.value
 }
 
+func (list *DoubleLinkedList[T]) reverse() {
+	current := list.head
+	var prev *Node[T]
+	var next *Node[T]
+	for current != nil {
+		next = current.next
+		current.next = prev
+		prev = current
+		current = next
+	}
+	list.head = prev
+}
+
 func main() {
 	list := DoubleLinkedList[int]{head: nil, tail: nil, size: 0}
 
@@ -154,6 +168,6 @@ func main() {
 	list.append(20)
 	list.append(25)
 
-	list.insert(50, 3)
+	list.reverse()
 	list.show()
 }

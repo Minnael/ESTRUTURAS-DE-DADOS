@@ -11,7 +11,7 @@ type List[T any] interface {
 	update(val T, pos int) //TERMINADO
 	insert(val T, pos int) //TERMINADO
 	remove(pos int)        //TERMINADO
-	inverter()             //TERMINADO
+	reverse()              //TERMINADO
 }
 
 type Node[T any] struct {
@@ -153,7 +153,7 @@ func (list *LinkedList[T]) remove(pos int) {
 	aux.next = aux.next.next
 }
 
-func (list *LinkedList[T]) inverter() {
+func (list *LinkedList[T]) reverse() {
 	current := list.head
 	var prev *Node[T]
 	var next *Node[T]
@@ -175,6 +175,6 @@ func main() {
 	list.append(20)
 	list.append(25)
 
-	list.inverter() //INVERTE LISTA
-	list.show()     //EXIBIR LISTA
+	list.reverse() //INVERTE LISTA
+	list.show()    //EXIBIR LISTA
 }
