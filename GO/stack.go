@@ -2,9 +2,8 @@ package main
 
 import "fmt"
 
-type Stac[T any] interface {
+type Stack[T any] interface {
 	push(val T) //TERMINADO
-	size() int  //TERMINADO
 	top() T     //TERMINADO
 	pop()       //TERMINADO
 	empty() int //TERMINADO
@@ -17,14 +16,16 @@ type Node[T any] struct {
 	back  *Node[T]
 }
 
-type Stack[T any] struct {
-	head *Node[T]
+type LinkedStack[T any] struct {
+	head     *Node[T]
+	inserted int
 }
 
-func (stack *Stack[T]) push(val T) {
+func (stack *LinkedStack[T]) push(val T) {
 	newNode := Node[T]{value: val, back: nil}
 	if stack.head == nil {
 		stack.head = &newNode
+		stack.inserted++
 		return
 	}
 
@@ -32,19 +33,10 @@ func (stack *Stack[T]) push(val T) {
 
 	stack.head = &newNode
 	stack.head.back = aux
+	stack.inserted++
 }
 
-func (stack *Stack[T]) size() int {
-	sup := 0
-	aux := stack.head
-	for aux != nil {
-		sup++
-		aux = aux.back
-	}
-	return sup
-}
-
-func (stack *Stack[T]) top() T {
+func (stack *LinkedStack[T]) top() T {
 	if stack.head == nil {
 		fmt.Println("EMPTY STACK")
 		var aux T
@@ -53,15 +45,17 @@ func (stack *Stack[T]) top() T {
 	return stack.head.value
 }
 
-func (stack *Stack[T]) pop() {
+func (stack *LinkedStack[T]) pop() {
 	if stack.head == nil {
 		fmt.Println("EMPTY STACK")
+		stack.inserted--
 		return
 	}
 	stack.head = stack.head.back
+	stack.inserted--
 }
 
-func (stack *Stack[T]) empty() int {
+func (stack *LinkedStack[T]) empty() int {
 	if stack.head == nil {
 		fmt.Println("EMPTY STACK -> TRUE")
 		return 1
@@ -71,15 +65,11 @@ func (stack *Stack[T]) empty() int {
 	}
 }
 
-func (stack *Stack[T]) clear() {
-	aux := stack.head
-	for aux != nil {
-		aux = aux.back
-		stack.head = aux
-	}
+func (stack *LinkedStack[T]) clear() {
+	stack.head = nil
 }
 
-func (stack *Stack[T]) show() {
+func (stack *LinkedStack[T]) show() {
 	if stack.head == nil {
 		fmt.Println("EMPTY STACK")
 		return
@@ -95,17 +85,13 @@ func (stack *Stack[T]) show() {
 }
 
 func main() {
-	stack := Stack[int]{head: nil}
+	stack := LinkedStack[int]{head: nil}
 
 	stack.push(10)
-	stack.push(50)
-	stack.push(40)
 	stack.push(20)
+	stack.push(30)
+	stack.push(40)
+	stack.push(50)
 
-	stack.empty()
-
-	stack.clear()
-
-	stack.empty()
-
+	stack.show()
 }
