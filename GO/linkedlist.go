@@ -165,16 +165,35 @@ func (list *LinkedList[T]) reverse() {
 	list.head = prev
 }
 
+func unique(list *LinkedList[int]) {
+	if list.head == nil {
+		fmt.Println("EMPTY LIST")
+		return
+	}
+
+	aux := list.head
+
+	for aux.next != nil {
+		if aux.value == aux.next.value {
+			aux.next = aux.next.next
+			list.inserted--
+		} else {
+			aux = aux.next
+		}
+	}
+}
+
 func main() {
-	list := LinkedList[int]{head: nil}
+	list := &LinkedList[int]{head: nil}
 
 	list.append(5)
 	list.append(10)
 	list.append(15)
 	list.append(20)
 	list.append(25)
+	list.append(30)
 
-	fmt.Println(list.inserted)
-	list.reverse() //INVERTE LISTA
-	list.show()    //EXIBIR LISTA
+	list.reverse()
+
+	list.show()
 }

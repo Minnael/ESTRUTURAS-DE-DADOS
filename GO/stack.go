@@ -85,13 +85,10 @@ func (stack *LinkedStack[T]) show() {
 }
 
 func main() {
-	stack := LinkedStack[int]{head: nil}
+	stack := LinkedStack[string]{head: nil}
 
-	stack.push(10)
-	stack.push(20)
-	stack.push(30)
-	stack.push(40)
-	stack.push(50)
-
-	stack.show()
+	aux := "(((())))"
+	for i := 0; i < len(aux); i++ {
+		stack.push(string(aux[i]))
+	}
 }

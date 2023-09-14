@@ -86,8 +86,11 @@ func (list *ArrayList) remove(pos int) {
 }
 
 func (list *ArrayList) reverse() {
-	for i := 0; i < list.inserted/2; i++ {
-		list.values[i], list.values[list.inserted-i-1] = list.values[list.inserted-i-1], list.values[i]
+	for i := 0; i < (list.inserted / 2); i++ {
+		head := list.values[i]
+		tail := list.values[list.inserted-i-1]
+		list.values[i] = tail
+		list.values[list.inserted-i-1] = head
 	}
 }
 
@@ -101,8 +104,6 @@ func main() {
 	list.append(4)
 	list.append(5)
 	list.append(6)
-
-	//list.insert(50, 4)
 
 	list.reverse()
 
