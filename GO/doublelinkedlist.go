@@ -10,7 +10,7 @@ type List[T any] interface {
 	remove(pos int)        //TERMINADO
 	insert(val T, pos int) //TERMINADO
 	get(pos int) T         //TERMINADO
-	reverse()
+	reverse()              //TERMINADO
 }
 
 type Node[T any] struct {
@@ -31,6 +31,7 @@ func (list *DoubleLinkedList[T]) append(val T) {
 		list.size++
 	} else {
 		list.tail.next = &newNode
+		list.tail.next.prev = list.tail
 		list.tail = &newNode
 		list.size++
 	}

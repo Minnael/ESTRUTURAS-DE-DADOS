@@ -17,7 +17,7 @@ type Node[T any] struct {
 
 type LinkedQueue[T any] struct {
 	head     *Node[T]
-	inserted inta
+	inserted int
 }
 
 func (queue *LinkedQueue[T]) enqueue(val T) {
@@ -74,6 +74,7 @@ func (queue *LinkedQueue[T]) show() {
 		fmt.Print("|", aux.value, "| -> ")
 		aux = aux.next
 	}
+	fmt.Print("nil")
 
 }
 

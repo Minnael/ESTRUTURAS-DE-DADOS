@@ -3,12 +3,12 @@ package main
 import "fmt"
 
 type Stack[T any] interface {
-	push(val T) //TERMINADO
-	top() T     //TERMINADO
-	pop()       //TERMINADO
-	empty() int //TERMINADO
-	clear()     //TERMINADO
-	show()      //TERMINADO
+	push(val T)  //TERMINADO
+	top() T      //TERMINADO
+	pop()        //TERMINADO
+	empty() bool //TERMINADO
+	clear()      //TERMINADO
+	show()       //TERMINADO
 }
 
 type Node[T any] struct {
@@ -55,13 +55,13 @@ func (stack *LinkedStack[T]) pop() {
 	stack.inserted--
 }
 
-func (stack *LinkedStack[T]) empty() int {
+func (stack *LinkedStack[T]) empty() bool {
 	if stack.head == nil {
 		fmt.Println("EMPTY STACK -> TRUE")
-		return 1
+		return true
 	} else {
 		fmt.Println("EMPTY STACK -> FALSE")
-		return 0
+		return false
 	}
 }
 
@@ -84,11 +84,28 @@ func (stack *LinkedStack[T]) show() {
 	fmt.Println("|", aux.value, "|")
 }
 
+func parenteses(par string) bool {
+	stack := LinkedStack[string]{head: nil}
+	size := len(par)
+	for i := 0; i < size; i++ {
+		if string(par[i]) == "(" {
+			stack.push("(")
+		}
+		if string(par[i]) == ")" && stack.top() == "(" {
+			stack.pop()
+		}
+	}
+	if stack.empty() {
+		return true
+	} else {
+		return false
+	}
+}
+
 func main() {
 	stack := LinkedStack[string]{head: nil}
 
-	aux := "(((())))"
-	for i := 0; i < len(aux); i++ {
-		stack.push(string(aux[i]))
-	}
+	aux := "(())"
+
+	parenteses(aux)
 }
