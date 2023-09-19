@@ -2,113 +2,124 @@ package main
 
 import "fmt"
 
-type ArrayList struct {
-	values   []int
+type List[T any] interface {
+	append(value T)          //TERMINADO
+	get(pos int) T           //TERMINADO
+	show()                   //TERMINADO
+	pop() T                  //TERMINADO
+	update(value T, pos int) //TERMINADO
+	insert(value T, pos int) //TERMINADO
+	remove(pos int)          //TERMINADO
+	reverse()                //TERMINADO
+}
+
+type ArrayList[T any] struct {
+	values   []T
 	inserted int
 }
 
-func Init(size int) ArrayList {
-	return ArrayList{values: make([]int, size), inserted: 0}
-}
-
-func (list *ArrayList) size() int {
-	return list.inserted
-}
-
-func (list *ArrayList) doubleArray(sizeArray int) {
-	doubleValues := make([]int, 2*sizeArray)
-	for i := 0; i < sizeArray; i++ {
-		doubleValues[i] = list.values[i]
+func (list *ArrayList[T]) doubleArray() {
+	newArray := make([]T, len(list.values)*2)
+	for i := 0; i < list.inserted; i++ {
+		newArray[i] = list.values[i]
 	}
-	list.values = doubleValues
+	list.values = newArray
 }
 
-func (list *ArrayList) append(value int) {
-	sizeArray := len(list.values)
-	if list.inserted == sizeArray {
-		list.doubleArray(sizeArray)
-	}
-	list.values[list.inserted] = value
-	list.inserted++
-}
-
-func (list *ArrayList) show(pos int) int {
-	if pos < 0 || pos > list.inserted {
-		panic("POSICAO INVÁLIDA!")
+func (list *ArrayList[T]) append(val T) {
+	if list.inserted == 0 {
+		list.values[0] = val
+		list.inserted++
 	} else {
-		return list.values[pos]
-	}
-}
-
-func (list *ArrayList) insert(value int, pos int) {
-	if pos >= 0 && pos <= list.inserted {
-		sizeArray := len(list.values)
-		if list.inserted == sizeArray {
-			list.doubleArray(sizeArray)
+		if list.inserted == len(list.values) {
+			list.doubleArray()
 		}
-		for i := list.inserted + 1; i > pos; i-- {
-			list.values[i] = list.values[i-1]
-		}
-		list.values[pos] = value
+		list.values[list.inserted] = val
 		list.inserted++
 	}
 }
 
-func (list *ArrayList) pop() {
+func (list *ArrayList[T]) show() {
+	for i := 0; i < list.inserted; i++ {
+		fmt.Print("|", list.values[i], "|    ")
+	}
+}
+
+func (list *ArrayList[T]) get(pos int) T {
 	if list.inserted == 0 {
-		fmt.Println("LISTA SEM NENHUM ELEMENTO!")
+		fmt.Println("EMPTY LIST!")
+		var aux T
+		return aux
+	}
+
+	if pos >= 0 && pos <= list.inserted-1 {
+		return list.values[pos]
 	} else {
-		var aux int
-		list.values[list.inserted-1] = aux
-		list.inserted--
+		fmt.Println("INVALID POSITION!")
+		var aux T
+		return aux
 	}
 }
 
-func (list *ArrayList) update(value int, pos int) {
-	if pos >= 0 && pos <= list.inserted {
-		list.values[pos] = value
+func (list *ArrayList[T]) update(val T, pos int) {
+	if pos >= 0 && pos <= list.inserted-1 {
+		list.values[pos] = val
 	} else {
-		fmt.Println("POSIÇÃO INVÁLIDA!")
+		fmt.Println("INVALID POSITION!")
 	}
 }
 
-func (list *ArrayList) remove(pos int) {
-	if pos >= 0 && pos <= list.inserted {
+func (list *ArrayList[T]) insert(val T, pos int) {
+	if pos >= 0 && pos < list.inserted {
+		if list.inserted == len(list.values) {
+			list.doubleArray()
+		}
+		for i := list.inserted; i > pos; i-- {
+			list.values[i] = list.values[i-1]
+		}
+		list.values[pos] = val
+		list.inserted++
+	} else {
+		fmt.Println("INVALID POSITION!")
+	}
+}
+
+func (list *ArrayList[T]) remove(pos int) {
+	if pos < 0 || pos > list.inserted {
+		fmt.Println("INVALID POSITION!")
+	} else {
 		for i := pos; i < list.inserted-1; i++ {
 			list.values[i] = list.values[i+1]
 		}
-		var aux int
-		list.values[list.inserted-1] = aux
 		list.inserted--
-	} else {
-		fmt.Println("POSIÇÃO INVÁLIDA!")
 	}
 }
 
-func (list *ArrayList) reverse() {
-	aux := 0
+func (list *ArrayList[T]) reverse() {
 	for i := 0; i < list.inserted/2; i++ {
-		aux = list.values[i]
-		list.values[i] = list.values[list.inserted-1-i]
-		list.values[list.inserted-1-i] = aux
+		aux := list.values[list.inserted-1-i]
+		list.values[list.inserted-1-i] = list.values[i]
+		list.values[i] = aux
 	}
 }
 
 func main() {
-	list := Init(5)
+	list := ArrayList[int]{values: make([]int, 5), inserted: 0}
 
-	list.append(0)
-	list.append(1)
-	list.append(2)
-	list.append(3)
-	list.append(4)
-	list.append(5)
-	list.append(6)
+	list.append(10)  //0
+	list.append(20)  //1
+	list.append(30)  //2
+	list.append(40)  //3
+	list.append(50)  //4
+	list.append(60)  //5
+	list.append(70)  //6
+	list.append(80)  //7
+	list.append(90)  //8
+	list.append(100) //9
+
+	list.insert(1001, 0)
 
 	list.reverse()
 
-	fmt.Println("TAMANHO DA LISTA:", list.size())
-	for i := 0; i < list.inserted; i++ {
-		fmt.Println("POSICAO:", list.show(i))
-	}
+	list.show()
 }
