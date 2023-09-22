@@ -39,6 +39,12 @@ func (list *ArrayList[T]) append(val T) {
 	}
 }
 
+func (list *ArrayList[T]) pop() T {
+	aux := list.values[list.inserted-1]
+	list.inserted--
+	return aux
+}
+
 func (list *ArrayList[T]) show() {
 	for i := 0; i < list.inserted; i++ {
 		fmt.Print("|", list.values[i], "|    ")
@@ -117,7 +123,7 @@ func main() {
 	list.append(90)  //8
 	list.append(100) //9
 
-	list.insert(1001, 0)
+	fmt.Println(list.pop())
 
 	list.reverse()
 
