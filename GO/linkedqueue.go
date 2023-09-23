@@ -1,11 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Queue[T any] interface {
 	enqueue(val T)
-	dequeue() T
-	front() T
+	dequeue() (T, error)
+	front() (T, error)
 	isempty() bool
 	show()
 }
@@ -16,48 +19,42 @@ type Node[T any] struct {
 }
 
 type LinkedQueue[T any] struct {
-	head     *Node[T]
-	inserted int
+	head, rear *Node[T]
+	inserted   int
 }
 
 func (queue *LinkedQueue[T]) enqueue(val T) {
 	newNode := Node[T]{value: val, next: nil}
 	if queue.inserted == 0 {
 		queue.head = &newNode
+		queue.rear = &newNode
 		queue.inserted++
 		return
 	}
-
-	aux := queue.head
-
-	for aux.next != nil {
-		aux = aux.next
-	}
-	aux.next = &newNode
+	queue.rear.next = &newNode
+	queue.rear = &newNode
 	queue.inserted++
 }
 
-func (queue *LinkedQueue[T]) dequeue() T {
+func (queue *LinkedQueue[T]) dequeue() (T, error) {
 	if queue.inserted == 0 {
-		fmt.Println("DEQUEU -> EMPTY QUEUE!")
 		var sup T
-		return sup
+		return sup, errors.New("EMPTY QUEUE")
 	}
 
 	aux := queue.head
 	queue.head = queue.head.next
 	queue.inserted--
-	return aux.value
+	return aux.value, errors.New("")
 }
 
-func (queue *LinkedQueue[T]) front() T {
+func (queue *LinkedQueue[T]) front() (T, error) {
 	if queue.inserted == 0 {
-		fmt.Println("FRONT -> EMPTY QUEUE!")
 		var sup T
-		return sup
+		return sup, errors.New("EMPTY QUEUE")
 	}
 
-	return queue.head.value
+	return queue.head.value, errors.New("")
 }
 
 func (queue *LinkedQueue[T]) isempty() bool {
@@ -87,7 +84,9 @@ func main() {
 	queue.enqueue(40)
 	queue.enqueue(50)
 
-	fmt.Println(queue.isempty())
+	queue.dequeue()
+	queue.dequeue()
+	queue.dequeue()
 
 	queue.show()
 }
