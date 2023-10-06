@@ -10,6 +10,7 @@ type Queue[T any] interface {
 	dequeue() (T, error)
 	front() (T, error)
 	isempty() bool
+	size() int
 	show()
 }
 
@@ -23,7 +24,7 @@ type LinkedQueue[T any] struct {
 	inserted   int
 }
 
-func (queue *LinkedQueue[T]) enqueue(val T) {
+func (queue *LinkedQueue[T]) enqueue(val T) { // O(1) BASTA FAZER AJUSTES NOS PONTEIROS COM ENFASE NO REAR, Ω(1)
 	newNode := Node[T]{value: val, next: nil}
 	if queue.inserted == 0 {
 		queue.head = &newNode
@@ -36,7 +37,7 @@ func (queue *LinkedQueue[T]) enqueue(val T) {
 	queue.inserted++
 }
 
-func (queue *LinkedQueue[T]) dequeue() (T, error) {
+func (queue *LinkedQueue[T]) dequeue() (T, error) { // O(1) BASTA FAZER AJUSTE DE PONTEIROS EM HEAD, Ω(1)
 	if queue.inserted == 0 {
 		var sup T
 		return sup, errors.New("EMPTY QUEUE")
@@ -48,7 +49,7 @@ func (queue *LinkedQueue[T]) dequeue() (T, error) {
 	return aux.value, errors.New("")
 }
 
-func (queue *LinkedQueue[T]) front() (T, error) {
+func (queue *LinkedQueue[T]) front() (T, error) { // O(1) BASTA RETONAR O PRIMEIRO ITEM DA QUEUE, Ω(1)
 	if queue.inserted == 0 {
 		var sup T
 		return sup, errors.New("EMPTY QUEUE")
@@ -57,12 +58,16 @@ func (queue *LinkedQueue[T]) front() (T, error) {
 	return queue.head.value, errors.New("")
 }
 
-func (queue *LinkedQueue[T]) isempty() bool {
+func (queue *LinkedQueue[T]) isempty() bool { // O(1) BASTA RETORNAR VERIFICAR QUEUE.INSERTED, Ω(1)
 	if queue.inserted == 0 {
 		return true
 	} else {
 		return false
 	}
+}
+
+func (queue *LinkedQueue[T]) size() int { // O(1) BASTA RETORNAR QUEUE.INSERTED, Ω(1)
+	return queue.inserted
 }
 
 func (queue *LinkedQueue[T]) show() {
@@ -84,9 +89,5 @@ func main() {
 	queue.enqueue(40)
 	queue.enqueue(50)
 
-	queue.dequeue()
-	queue.dequeue()
-	queue.dequeue()
-
-	queue.show()
+	fmt.Println(queue.rear.value)
 }

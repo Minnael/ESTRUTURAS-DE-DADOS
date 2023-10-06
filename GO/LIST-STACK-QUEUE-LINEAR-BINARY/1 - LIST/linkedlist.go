@@ -185,6 +185,8 @@ func main() {
 	list.append(400)
 	list.append(500)
 
+	fmt.Println(list.pop + list.pop)
+
 	list.reverse()
 
 	list.show()

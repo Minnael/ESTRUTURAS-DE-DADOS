@@ -162,7 +162,8 @@ func (list *DoubleLinkedList[T]) insert(val T, pos int) {
 
 func (list *DoubleLinkedList[T]) reverse() {
 	current := list.head
-	var prev, next *Node[T]
+	prev := list.head.prev
+	next := list.head.next
 	for current != nil {
 		next = current.next
 		current.next = prev

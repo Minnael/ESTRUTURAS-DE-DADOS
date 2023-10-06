@@ -26,7 +26,7 @@ func (queue *ArrayQueue[T]) DoubleArray() {
 	queue.values = newArray
 }
 
-func (queue *ArrayQueue[T]) Enqueue(val T) {
+func (queue *ArrayQueue[T]) Enqueue(val T) { // O(N) AUMENTAR ARRRAY, Ω(1) NÃO AUMENTAR ARRAY
 	if queue.inserted == len(queue.values) {
 		queue.DoubleArray()
 	}
@@ -34,7 +34,7 @@ func (queue *ArrayQueue[T]) Enqueue(val T) {
 	queue.inserted++
 }
 
-func (queue *ArrayQueue[T]) Dequeue() (T, error) {
+func (queue *ArrayQueue[T]) Dequeue() (T, error) { // O(1) BASTA CORTAR O ARRAY, Ω(1)
 	if queue.inserted == 0 {
 		var aux T
 		return aux, errors.New("EMPTY QUEUE")
@@ -45,7 +45,7 @@ func (queue *ArrayQueue[T]) Dequeue() (T, error) {
 	return aux, errors.New("")
 }
 
-func (queue *ArrayQueue[T]) Front() (T, error) {
+func (queue *ArrayQueue[T]) Front() (T, error) { // O(1) RETORNA O ITEM MAIS ANTIGO DA FILA, Ω(1)
 	if queue.inserted == 0 {
 		var aux T
 		return aux, errors.New("EMPTY QUEUE")
@@ -53,14 +53,14 @@ func (queue *ArrayQueue[T]) Front() (T, error) {
 	return queue.values[0], errors.New("")
 }
 
-func (queue *ArrayQueue[T]) IsEmpty() bool {
+func (queue *ArrayQueue[T]) IsEmpty() bool { // O(1) VERIFICA QUEUE.INSERTED, Ω(1)
 	if queue.inserted == 0 {
 		return true
 	}
 	return false
 }
 
-func (queue *ArrayQueue[T]) Size() int {
+func (queue *ArrayQueue[T]) Size() int { // O(1) RETORNA QUEUE.INSERTED, Ω(1)
 	return queue.inserted
 }
 
@@ -72,6 +72,8 @@ func main() {
 	queue.Enqueue(300)
 	queue.Enqueue(400)
 	queue.Enqueue(500)
+
+	fmt.Println(queue.Dequeue())
 
 	fmt.Println(queue.IsEmpty())
 }

@@ -21,7 +21,7 @@ type LinkedStack[T any] struct {
 	inserted int
 }
 
-func (stack *LinkedStack[T]) push(val T) {
+func (stack *LinkedStack[T]) push(val T) { // O(1) BASTA ADICIONAR NO FINAL DA PILHA, Ω(1)
 	newNode := Node[T]{value: val, back: nil}
 	if stack.head == nil {
 		stack.head = &newNode
@@ -36,7 +36,7 @@ func (stack *LinkedStack[T]) push(val T) {
 	stack.inserted++
 }
 
-func (stack *LinkedStack[T]) top() T {
+func (stack *LinkedStack[T]) top() T { // O(1) BASTA RETORNAR O ITEM DO TOPO, Ω(1)
 	if stack.head == nil {
 		fmt.Println("EMPTY STACK")
 		var aux T
@@ -45,7 +45,7 @@ func (stack *LinkedStack[T]) top() T {
 	return stack.head.value
 }
 
-func (stack *LinkedStack[T]) pop() {
+func (stack *LinkedStack[T]) pop() { // O(1) BASTA RETIRAR O ÚLTIMO ITEM DA PILHA, Ω(1)
 	if stack.head == nil {
 		fmt.Println("EMPTY STACK")
 		stack.inserted--
@@ -55,7 +55,7 @@ func (stack *LinkedStack[T]) pop() {
 	stack.inserted--
 }
 
-func (stack *LinkedStack[T]) empty() bool {
+func (stack *LinkedStack[T]) empty() bool { // O(1) BASTA VERIFICAR STACK.HEAAD OU STACK.INSERTED, Ω(1)
 	if stack.head == nil {
 		fmt.Println("EMPTY STACK -> TRUE")
 		return true
@@ -65,7 +65,7 @@ func (stack *LinkedStack[T]) empty() bool {
 	}
 }
 
-func (stack *LinkedStack[T]) clear() {
+func (stack *LinkedStack[T]) clear() { // O(1) BASTA TRABALHAR STACK.HEAD, Ω(1)
 	stack.head = nil
 }
 

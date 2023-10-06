@@ -75,7 +75,7 @@ func (stack *ArrayStack[T]) top() T {
 }
 
 func main() {
-	par := "(()))"
+	par := "((()))"
 
 	fmt.Println(parenteses(par))
 

@@ -103,8 +103,8 @@ func (list *ArrayList[T]) remove(pos int) {
 
 func (list *ArrayList[T]) reverse() {
 	for i := 0; i < list.inserted/2; i++ {
-		aux := list.values[list.inserted-1-i]
-		list.values[list.inserted-1-i] = list.values[i]
+		aux := list.values[list.inserted-i-1]
+		list.values[list.inserted-i-1] = list.values[i]
 		list.values[i] = aux
 	}
 }
@@ -123,8 +123,7 @@ func main() {
 	list.append(90)  //8
 	list.append(100) //9
 
-	fmt.Println(list.pop())
-
+	fmt.Println(list.pop() + list.pop())
 	list.reverse()
 
 	list.show()
