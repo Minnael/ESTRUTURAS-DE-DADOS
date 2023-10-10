@@ -2,25 +2,19 @@ package main
 
 import "fmt"
 
-func selectionSort(lista []int) []int {
-	for i := 0; i < len(lista); i++ {
-		number := lista[i]
-		sup := i
-		for j := i; j < len(lista); j++ {
-			if number >= lista[j] {
-				number = lista[j]
-				sup = j
+func selectionSort(list []int) []int {
+	for i := 0; i < len(list); i++ {
+		for j := i + 1; j < len(list); j++ {
+			if list[i] > list[j] {
+				list[i], list[j] = list[j], list[i]
 			}
 		}
-		number = lista[i]
-		lista[i] = lista[sup]
-		lista[sup] = number
 	}
-	return lista
+	return list
 }
 
 func main() {
-	lista := []int{7, 5, 1, 8, 3, 40, 10, 1, 1, 27, 13, 9, 0}
+	list := []int{7, 5, 8, 3, 40, 10, 27, 13, 0, 20, 4, 1, 9, 14, 101, 28381, 31, 77, 91, 82, 97, 444, 900, 7}
 
-	fmt.Println(selectionSort(lista))
+	fmt.Println(selectionSort(list))
 }
