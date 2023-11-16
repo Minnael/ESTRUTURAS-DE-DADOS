@@ -7,7 +7,7 @@ func insertionSort(list []int) []int {
 		number := list[i+1]
 		for i >= 0 && list[i] > number {
 			list[i+1] = list[i]
-			i = i - 1
+			i--
 		}
 		list[i+1] = number
 	}
@@ -15,7 +15,7 @@ func insertionSort(list []int) []int {
 }
 
 func main() {
-	list := []int{7, 5, 8, 3, 40, 10, 27, 13, 0, 20, 4, 1, 9, 14, 101, 28381, 31, 77, 91, 82, 97, 444, 900, 7}
+	list := []int{7, 5}
 
 	fmt.Println(insertionSort(list))
 }
