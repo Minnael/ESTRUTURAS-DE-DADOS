@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func insertionsort(list []int) []int {
+func insertionSort(list []int) []int {
 	for i := 0; i < len(list)-1; i++ {
 		number := list[i+1]
 		for i >= 0 && list[i] > number {

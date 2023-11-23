@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func bubblesort(list []int) []int {
+func bubbleSort(list []int) []int {
 	condition := true
 	for condition {
 		condition = false
