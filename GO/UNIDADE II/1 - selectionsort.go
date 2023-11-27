@@ -14,7 +14,7 @@ func selectionSort(list []int) []int {
 }
 
 func main() {
-	list := []int{7, 5, 8, 3, 40, 10, 27, 13, 0, 20, 4, 1, 9, 14, 101, 28381, 31, 77, 91, 82, 97, 444, 900, 7}
+	list := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 
 	fmt.Println(selectionSort(list))
 }

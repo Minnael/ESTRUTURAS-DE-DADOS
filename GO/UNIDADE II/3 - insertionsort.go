@@ -14,6 +14,6 @@ func insertionSort(list []int) []int {
 }
 
 func main() {
-	list := []int{3, 1, 8, 4, 1, 7, 5, 1, 5, 1, 8}
-	fmt.Println(insertionsort(list))
+	list := []int{3, 2, 1}
+	fmt.Println(insertionSort(list))
 }

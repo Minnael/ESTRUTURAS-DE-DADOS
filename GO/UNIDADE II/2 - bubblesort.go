@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func bubbleSort(list []int) []int {
+func bubbleSort(list []int) {
 	condition := true
 	for condition {
 		condition = false
@@ -13,11 +13,10 @@ func bubbleSort(list []int) []int {
 			}
 		}
 	}
-	return list
 }
 
 func main() {
-	list := []int{7, 5, 8, 3, 40, 10, 27, 13, 0, 20, 4, 1, 9, 14, 101, 28381, 31, 77, 91, 82, 97, 444, 900, 7}
-
-	fmt.Println(bubblesort(list))
+	list := []int{10, 9, 8, 11, 2, 1, 8, -1, 14, 1, 20}
+	bubbleSort(list)
+	fmt.Println(list)
 }

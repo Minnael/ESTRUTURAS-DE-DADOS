@@ -13,7 +13,7 @@ func quickSort(lista []int, inicio int, fim int) {
 func particiona(lista []int, inicio int, fim int) int {
 	pivo := lista[fim]
 	i := inicio
-	for j := inicio; j < fim; j++ {
+	for j := inicio + 1; j < fim; j++ {
 		if lista[j] < pivo {
 			lista[j], lista[i] = lista[i], lista[j]
 			i++
@@ -24,7 +24,7 @@ func particiona(lista []int, inicio int, fim int) int {
 }
 
 func main() {
-	lista := []int{4, 7, 2, 6, 4, 1, 8, 3}
+	lista := []int{5, 4, 3, 2, 1, -5, -4, -3, -2, -1}
 	quickSort(lista, 0, len(lista)-1)
 	fmt.Println(lista)
 }
